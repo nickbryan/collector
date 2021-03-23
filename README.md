@@ -1,0 +1,9 @@
+- collection
+    - Core domain
+- communication
+    - emails
+    - sms
+- membership
+    - account (user, customer whatever)
+- subscription
+    - subscribe to someone's collection
