@@ -16,3 +16,26 @@ services:
     Collector\SharedKernel\:
         resource: '../src/*'
         exclude: '{Kernel.php}'
+
+    # our requests should have the method getValidationData so that the validator can run constraint checks
+    # against the collection of request data. As we validate this as a collection, we want to remove the
+    # root collection prefix from the resulting error conversions.
+    # For example: "propertyPath": "validationData[surname]" should become "propertyPath": "[surname]"
+    Collector\SharedKernel\Infrastructure\Validator\Serialization\RootCollectionNameConverter: ~
+    Symfony\Component\Serializer\Normalizer\ConstraintViolationListNormalizer:
+        arguments:
+            $nameConverter: '@Collector\SharedKernel\Infrastructure\Validator\Serialization\RootCollectionNameConverter'
+        tags: [ serializer.normalizer ]
+
+    # this normalizer allows us to use accessors that are not prefixed with get, is, has etc.
+    # so we can use $obj->property() instead of $obj->getProperty()
+    Collector\SharedKernel\Infrastructure\Serializer\Normalizer\PropertyMethodAccessorNormalizer:
+        class: Collector\SharedKernel\Infrastructure\Serializer\Normalizer\PropertyMethodAccessorNormalizer
+        arguments:
+            - '@serializer.mapping.class_metadata_factory'
+            - '@serializer.name_converter.camel_case_to_snake_case'
+        tags: [ serializer.normalizer ]
+
+    # register the HTTP exception listener
+    Collector\SharedKernel\Transport\Http\ErrorHandling\ExceptionListener:
+        tags: [ kernel.event_listener ]

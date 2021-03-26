@@ -3,4 +3,22 @@ parameters:
     paths:
         - modules
     symfony:
-        container_xml_path: var/cache/dev/App_KernelDevDebugContainer.xml
+        container_xml_path: var/cache/dev/Collector_SharedKernel_KernelDevDebugContainer.xml
+    bootstrapFiles:
+        - bin/.phpunit/phpunit-8.5-0/vendor/autoload.php
+    ignoreErrors:
+        -
+          message: '#Dynamic call to static method PHPUnit\\Framework\\Assert::#'
+          path: 'modules/*/tests/*'
+        -
+          message: '#Dynamic call to static method PHPUnit\\Framework\\TestCase::#'
+          path: 'modules/*/tests/*'
+        -
+          message: '#Cannot call method (.+) on Symfony\\Component\\HttpFoundation\\Response\|null\.#'
+          path: 'modules/*/tests/*'
+        -
+          message: '#Call to an undefined method (.+)::method\(\)\.#'
+          path: 'modules/*/tests/*'
+        -
+          message: '#Call to an undefined method (.+)::expects\(\)\.#'
+          path: 'modules/*/tests/*'

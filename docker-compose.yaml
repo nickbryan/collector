@@ -29,8 +29,8 @@ services:
     volumes:
       - .:/var/www
 
-  nginx:
-    container_name: nginx
+  collectornginx:
+    container_name: collector-nginx
     image: nginx
     volumes:
       - ./nginx.conf:/etc/nginx/conf.d/default.conf

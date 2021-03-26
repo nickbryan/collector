@@ -1,0 +1,6 @@
+members.get:
+  path: /members/{member_id}
+  methods: GET
+  controller: Collector\Membership\Transport\Http\Member\Action\GetAction
+  defaults:
+    _format: json
