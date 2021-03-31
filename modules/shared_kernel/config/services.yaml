@@ -39,3 +39,7 @@ services:
     # register the HTTP exception listener
     Collector\SharedKernel\Transport\Http\ErrorHandling\ExceptionListener:
         tags: [ kernel.event_listener ]
+
+    # http event listeners
+    Collector\SharedKernel\Transport\Http\ActionListener\DecodeJsonBodyListener:
+        tags: [ kernel.event_listener ]

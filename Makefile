@@ -24,17 +24,44 @@ help:
 	@echo "\nUsage: make ${YELLOW}<target>${RESET}\n\nThe following targets are available:\n";
 	@perl -e '$(HELP_FUN)' $(MAKEFILE_LIST)
 
+composer: ##@Composer
+	docker exec -it collector-php-fpm /bin/bash -c 'composer ${command}'
+
+composer-remove: ##@Composer
+	docker exec -it collector-php-fpm /bin/bash -c 'composer remove ${package}'
+
+composer-require: ##@Composer
+	docker exec -it collector-php-fpm /bin/bash -c 'composer require ${package}'
+
+composer-require-dev: ##@Composer
+	docker exec -it collector-php-fpm /bin/bash -c 'composer require --dev ${package}'
+
+composer-update: ##@Composer
+	docker exec -it collector-php-fpm /bin/bash -c 'composer update ${package}'
+
+console:
+	docker exec -it collector-php-fpm /bin/bash -c './bin/console ${command}'
+
 docker-up: ##@Local-development
-	docker-compose -f docker-compose.yaml up -d
+	docker-compose -f devops/docker-compose.yaml up -d
 
 docker-down: ##@Local-development
-	docker-compose -f docker-compose.yaml down
+	docker-compose -f devops/docker-compose.yaml down
 
 docker-logs: ##@Local-development
-	docker-compose -f docker-compose.yaml logs -f
+	docker-compose -f devops/docker-compose.yaml logs -f
 
-phpstan:
-	docker exec -it collector-php-fpm /bin/bash -c 'composer run-script phpstan'
+migrate: ##@Migrations
+	docker exec -it collector-php-fpm /bin/bash -c './bin/console doctrine:migrations:migrate --em=${module}'
 
-test-unit: ##@Test
+migrate-first: ##@Migrations
+	docker exec -it collector-php-fpm /bin/bash -c './bin/console doctrine:migrations:migrate --em=${module} first'
+
+create-migration: ##@Migrations
+	docker exec -it collector-php-fpm /bin/bash -c './bin/console doctrine:migrations:generate --em=${module}'
+
+unit-test: ##@Test
 	docker exec -it collector-php-fpm /bin/bash -c 'php bin/phpunit ${args}'
+
+phpstan: ##@Quality-Analysis
+	docker exec -it collector-php-fpm /bin/bash -c 'composer run-script phpstan'

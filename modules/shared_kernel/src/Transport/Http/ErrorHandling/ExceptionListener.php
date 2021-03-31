@@ -33,7 +33,7 @@ final class ExceptionListener
         if ($exception instanceof ValidationFailedException) {
             $event->setResponse(
                 JsonResponse::fromJsonString(
-                    $this->serializer->serialize($exception->constraints(), self::ERROR_FORMAT),
+                    $this->serializer->serialize($exception->constraints(), ExceptionListener::ERROR_FORMAT),
                     $statusCode,
                 ),
             );
@@ -45,8 +45,8 @@ final class ExceptionListener
             $event->setResponse(
                 new JsonResponse(
                     [
-                        'type' => self::DEFAULT_TYPE,
-                        'title' => self::HTTP_TITLE,
+                        'type' => ExceptionListener::DEFAULT_TYPE,
+                        'title' => ExceptionListener::HTTP_TITLE,
                         'detail' => $exception->getMessage(),
                     ],
                     $exception->getStatusCode(),
@@ -63,8 +63,8 @@ final class ExceptionListener
         $event->setResponse(
             new JsonResponse(
                 [
-                    'type' => self::DEFAULT_TYPE,
-                    'title' => self::DEFAULT_TITLE,
+                    'type' => ExceptionListener::DEFAULT_TYPE,
+                    'title' => ExceptionListener::DEFAULT_TITLE,
                     'detail' => $exception->getMessage(),
                 ],
                 $statusCode,

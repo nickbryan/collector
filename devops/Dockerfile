@@ -12,6 +12,6 @@ COPY --from=composer /usr/bin/composer /usr/bin/composer
 
 WORKDIR /var/www
 
-CMD composer i -o ; bin/console doctrine:migrations:migrate ;  php-fpm
+CMD composer i -o; php-fpm
 
 EXPOSE 9000

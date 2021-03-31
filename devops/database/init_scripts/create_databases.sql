@@ -1,0 +1,4 @@
+CREATE DATABASE collector_collection;
+CREATE DATABASE collector_comunication;
+CREATE DATABASE collector_membership;
+CREATE DATABASE collector_subscription;

@@ -1,0 +1,22 @@
+doctrine:
+    dbal:
+        default_connection: noop
+        connections:
+            noop: # noop is the default drive to force developers to specify a connection
+                  # (as we are using mutliple db connections).
+                url: ''
+            membership:
+                wrapper_class: Collector\Membership\Infrastructure\Persistence\Postgres\MembershipConnection
+                driver: 'pdo_pgsql'
+                server_version: '13'
+                charset: UTF8
+                default_table_options:
+                    charset: UTF8
+                url: '%env(resolve:MEMBERSHIP_DATABASE_URL)%'
+
+    orm:
+        default_entity_manager: noop
+        entity_managers:
+            noop: ~
+            membership:
+                connection: membership

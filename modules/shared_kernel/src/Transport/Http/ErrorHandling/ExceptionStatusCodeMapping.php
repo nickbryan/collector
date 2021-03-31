@@ -16,7 +16,7 @@ final class ExceptionStatusCodeMapping
     ];
 
     /** @var array<string, int> Where key is the exception type and value is the response code. */
-    private array $exceptions = self::DEFAULT_EXCEPTION_MAPPINGS;
+    private array $exceptions = ExceptionStatusCodeMapping::DEFAULT_EXCEPTION_MAPPINGS;
 
     public function register(string $exception, int $statusCode): void
     {
@@ -30,6 +30,6 @@ final class ExceptionStatusCodeMapping
 
     public function statusCodeFor(string $exception): int
     {
-        return $this->exceptions[$exception] ?? self::DEFAULT_STATUS_CODE;
+        return $this->exceptions[$exception] ?? ExceptionStatusCodeMapping::DEFAULT_STATUS_CODE;
     }
 }

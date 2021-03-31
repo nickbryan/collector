@@ -12,19 +12,15 @@ final class ValidationConstraints
     /** @var Field[] */
     private array $fields;
 
-    public function __construct(
-        private bool $allowMissingFields = false,
-        private bool $allowExtraFields = false,
-        Field ...$fields,
-    ) {
+    public function __construct(Field ...$fields) {
         $this->fields = $fields;
     }
 
     public function constraints(): Collection
     {
         return new Collection([
-            'allowMissingFields' => $this->allowMissingFields,
-            'allowExtraFields' => $this->allowExtraFields,
+            'allowMissingFields' => true,
+            'allowExtraFields' => false,
             'fields' => $this->keyValueFields(),
         ]);
     }

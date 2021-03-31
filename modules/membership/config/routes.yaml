@@ -4,3 +4,10 @@ members.get:
   controller: Collector\Membership\Transport\Http\Member\Action\GetAction
   defaults:
     _format: json
+
+members.create:
+  path: /members
+  methods: POST
+  controller: Collector\Membership\Transport\Http\Member\Action\CreateAction
+  defaults:
+    _format: json

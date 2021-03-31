@@ -52,7 +52,7 @@ final class ValidatableRequestTest extends TestCase
             ->expects($this->once())
             ->method('validate')
             ->with($attributes, new Collection([
-                'allowMissingFields' => false,
+                'allowMissingFields' => true,
                 'allowExtraFields' => false,
                 'fields' => ['some_key' => new Required(new Email())],
             ]))
@@ -75,7 +75,7 @@ final class ValidatableRequestTest extends TestCase
             ->expects($this->once())
             ->method('validate')
             ->with([], new Collection([
-               'allowMissingFields' => false,
+               'allowMissingFields' => true,
                'allowExtraFields' => false,
                'fields' => ['some_key' => new Required(new Email())],
            ]))
@@ -84,29 +84,6 @@ final class ValidatableRequestTest extends TestCase
             );
 
         $this->mockRequest(new ValidationConstraints(fields: new Field('some_key', new Required(new Email()))));
-    }
-
-    public function testMissingAndExtraFieldsFlagsArePassedThroughToValidator(): void
-    {
-        $this->requestStack->expects($this->once())->method('getCurrentRequest')->willReturn(new Request());
-
-        $this->validator
-            ->expects($this->once())
-            ->method('validate')
-            ->with([], new Collection([
-                'allowMissingFields' => true,
-                'allowExtraFields' => true,
-                'fields' => ['some_key' => new Required(new Email())],
-            ]))
-            ->willReturn(
-                new ConstraintViolationList([]),
-            );
-
-        $this->mockRequest(new ValidationConstraints(
-            allowMissingFields: true,
-            allowExtraFields: true,
-            fields: new Field('some_key', new Required(new Email())),
-        ));
     }
 
     public function testValidationFailedExceptionIsThrownWhenQueryValidationFails(): void
@@ -119,7 +96,7 @@ final class ValidatableRequestTest extends TestCase
             ->expects($this->once())
             ->method('validate')
             ->with($attributes, new Collection([
-                'allowMissingFields' => false,
+                'allowMissingFields' => true,
                 'allowExtraFields' => false,
                 'fields' => ['some_key' => new Required(new Email())],
             ]))
@@ -142,7 +119,7 @@ final class ValidatableRequestTest extends TestCase
             ->expects($this->once())
             ->method('validate')
             ->with($attributes, new Collection([
-                'allowMissingFields' => false,
+                'allowMissingFields' => true,
                 'allowExtraFields' => false,
                 'fields' => ['some_key' => new Required(new Email())],
             ]))
@@ -165,7 +142,7 @@ final class ValidatableRequestTest extends TestCase
             ->expects($this->once())
             ->method('validate')
             ->with($attributes, new Collection([
-                'allowMissingFields' => false,
+                'allowMissingFields' => true,
                 'allowExtraFields' => false,
                 'fields' => ['some_key' => new Required(new Email())],
             ]))
@@ -191,7 +168,7 @@ final class ValidatableRequestTest extends TestCase
             ->expects($this->once())
             ->method('validate')
             ->with($expected, new Collection([
-                'allowMissingFields' => false,
+                'allowMissingFields' => true,
                 'allowExtraFields' => false,
                 'fields' => ['some_key' => new Required(new Email())],
             ]))

@@ -15,6 +15,10 @@ services:
     # this creates a service per class whose id is the fully-qualified class name
     Collector\Membership\:
         resource: '../src/*'
+        exclude: [ '../src/Infrastructure/Persistence/Postgres/Migration' ]
+
+    # db connection for membership database
+    Collector\Membership\Infrastructure\Persistence\Postgres\MembershipConnection: '@doctrine.dbal.membership_connection'
 
     # controllers are imported separately to make sure services can be injected
     # as action arguments even if you don't extend any base controller class

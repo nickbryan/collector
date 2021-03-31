@@ -1,0 +1,5 @@
+doctrine_migrations_multiple_database:
+  entity_managers:
+    membership:
+      migrations_paths:
+        Postgres\Membership\Migration: '%kernel.project_dir%/modules/membership/src/Infrastructure/Persistence/Postgres/Migration'
